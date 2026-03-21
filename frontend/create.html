@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Feedback | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <style>
+        .form-item:hover { background: rgba(255,255,255,0.1) !important; }
+        .form-item.active { border-color: var(--primary) !important; background: rgba(99, 102, 241, 0.15) !important; }
+        /* To make scrollbars look nice */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="glass-panel dashboard-panel">
+        <div class="header">
+            <h2>Your Dashboard</h2>
+            <button class="btn-text" onclick="logout()">Log Out</button>
+        </div>
+        
+        <div class="create-section">
+            <h3>Create New Form</h3>
+            <p class="subtitle">Generate a link to start receiving anonymous messages</p>
+            <div class="input-group">
+                <input type="text" placeholder="E.g., Feedback for my latest track" id="title">
+            </div>
+            <button class="primary-btn" onclick="createForm()" id="createFormBtn">Create Form</button>
+        </div>
+
+        <div id="link-container" class="link-container hidden">
+            <p>Share this link to get feedback:</p>
+            <div class="link-box">
+                <a id="link" href="#" target="_blank"></a>
+                <button class="btn-icon" onclick="copyLink()">Copy</button>
+            </div>
+        </div>
+
+        <div class="forms-list-section" style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--panel-border);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3>Your Forms</h3>
+                <button class="btn-icon" onclick="loadUserForms()">Refresh</button>
+            </div>
+            <div id="forms-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; margin-bottom: 24px;">
+                <p class="subtitle" id="noFormsText">You haven't created any forms yet.</p>
+            </div>
+        </div>
+
+        <div class="feedback-section" style="margin-top: 24px">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 id="responses-header-text">Recent Responses</h3>
+                <button class="btn-icon" onclick="refreshFeedbacks()" id="refreshBtn">Refresh</button>
+            </div>
+            <p class="subtitle" id="noFormSelectedText">Select a form to see its responses here.</p>
+            <div id="feedback-list" class="feedback-list" style="display: flex; flex-direction: column; gap: 12px; max-height: 400px; overflow-y: auto;">
+                <!-- Feedbacks loaded dynamically -->
+            </div>
+        </div>
+    </div>
+    <div id="toast" class="toast"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+             if(!localStorage.getItem("token")) {
+                 window.location.href = "index.html";
+             } else {
+                 if(typeof loadUserForms === 'function') loadUserForms();
+             }
+        });
+    </script>
+</body>
+</html>
