@@ -98,17 +98,6 @@ Important:
 - Prefer opening through backend (`localhost:3000`).
 - Opening frontend files directly via `file://` can break auth/navigation due to browser origin restrictions.
 
-## API Smoke Test Script
-
-A helper script exists at `backend/test_api.js`.
-
-It runs this flow:
-1. Signup test user
-2. Signin
-3. Create form
-4. Load form
-5. Submit feedback
-6. Fetch feedback as owner
 
 
 ## Current Scripts
